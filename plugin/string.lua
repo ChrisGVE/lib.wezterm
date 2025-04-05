@@ -1,4 +1,7 @@
 -- String utility functions for wezterm
+-- All string functions are designed to work with both regular and method (sugar) syntax:
+-- Regular: string.hash("test")  
+-- Sugar: "test":hash()
 local M = {}
 
 local string_utils = {}
@@ -55,12 +58,14 @@ function string_utils.utf8len(str)
 end
 
 -- Add the string functions to the built-in string table
+-- This allows both regular syntax (string.func) and method syntax (str:func)
 for name, func in pairs(string_utils) do
 	string[name] = func
 end
 
 -- The string metatable is protected in recent Lua versions
 -- We need to use debug library to access it (if available)
+-- This step ensures the sugar notation (str:func) works properly
 local ok, string_mt = pcall(function()
 	return debug.getmetatable("")
 end)
