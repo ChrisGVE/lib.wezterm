@@ -12,18 +12,18 @@ jobs:
     
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
     
-    - name: Set up Lua
-      uses: leafo/gh-actions-lua@v8.1.0
-      with:
-        luaVersion: "5.4"
-    
-    - name: Set up LuaRocks
-      uses: leafo/gh-actions-luarocks@v4
-    
-    - name: Debug environment
+    - name: Set up Lua environment
       run: |
+        # Install Lua and LuaRocks directly using apt
+        sudo apt-get update
+        sudo apt-get install -y lua5.3 liblua5.3-dev lua-check luarocks
+        
+        # Configure LuaRocks
+        sudo luarocks install busted
+        
+        # Print environment info for debugging
         echo "Lua version:"
         lua -v
         echo "LuaRocks version:"
@@ -32,21 +32,11 @@ jobs:
         pwd
         echo "Directory listing:"
         ls -la
-        echo "PATH:"
-        echo $PATH
-        echo "Which lua:"
-        which lua || echo "lua not found in PATH"
-    
-    - name: Install dependencies
-      run: |
-        luarocks install busted
-        luarocks install luacheck
     
     - name: Run tests
       run: |
-        ~/.lua/bin/busted --verbose tests/unit/
+        busted --verbose tests/unit/
     
     - name: Run linter
       run: |
-        # Allow the known string metatable warning
-        ~/.lua/bin/luacheck . --exclude-files ".lua/**/*.lua" || [ $? -eq 1 ] && echo "Linting warnings are acceptable"
+        luacheck . || [ $? -eq 1 ] && echo "Linting warnings are acceptable"
