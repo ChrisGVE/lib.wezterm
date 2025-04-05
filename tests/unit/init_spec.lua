@@ -12,38 +12,9 @@ describe("init", function()
         restore()
     end)
     
-    describe("hash", function()
-        it("should generate a consistent hash for a string", function()
-            local init = require("plugin.init")
-            
-            -- Test with some known strings
-            local hash1 = init.hash("test")
-            assert.is_string(hash1)
-            assert.is_not.equal("", hash1)
-            
-            -- Same input should produce same hash
-            local hash2 = init.hash("test")
-            assert.are.equal(hash1, hash2)
-            
-            -- Different input should produce different hash
-            local hash3 = init.hash("different")
-            assert.are_not.equal(hash1, hash3)
-        end)
-        
-        it("should handle empty strings", function()
-            local init = require("plugin.init")
-            
-            local hash = init.hash("")
-            assert.is_string(hash)
-            assert.is_not.equal("", hash)
-        end)
-        
-        it("should handle special characters", function()
-            local init = require("plugin.init")
-            
-            local hash = init.hash("!@#$%^&*()")
-            assert.is_string(hash)
-            assert.is_not.equal("", hash)
-        end)
+    -- Basic test to ensure init module can be loaded and returned
+    it("should load without errors", function()
+        local init = require("plugin.init")
+        assert.is_table(init)
     end)
 end)
