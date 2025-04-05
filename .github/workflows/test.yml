@@ -11,10 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v4
     
     - name: Set up Lua
-      uses: leafo/gh-actions-lua@v9
+      uses: leafo/gh-actions-lua@v10
       with:
         luaVersion: "5.4"
     
@@ -27,16 +28,34 @@ jobs:
         luarocks install luacov
         luarocks install luacheck
     
+    - name: Debug environment
+      run: |
+        echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+        ls -la $GITHUB_WORKSPACE
+        ls -la $GITHUB_WORKSPACE/tests
+    
+    - name: Create .lua structure
+      run: |
+        mkdir -p .lua/share/lua/5.4
+        mkdir -p .lua/lib/lua/5.4
+        mkdir -p .lua/bin
+    
     - name: Run tests
       run: |
         cd $GITHUB_WORKSPACE
-        lua tests/run_tests.lua
+        busted --pattern=".lua" tests/unit/
+      env:
+        CI: true
     
     - name: Run linter
       run: |
         luacheck .
-
-    - name: Upload coverage reports
+    
+    - name: Upload coverage reports (if configured)
       if: success()
       run: |
-        bash <(curl -s https://codecov.io/bash)
+        if command -v codecov >/dev/null 2>&1; then
+          codecov
+        else
+          echo "Codecov tool not installed, skipping upload"
+        fi

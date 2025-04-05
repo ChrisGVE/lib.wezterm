@@ -1,5 +1,7 @@
 # lib.wezterm
 
+[![Tests](https://github.com/ChrisGVE/lib.wezterm/actions/workflows/test.yml/badge.svg)](https://github.com/ChrisGVE/lib.wezterm/actions/workflows/test.yml)
+
 A library of common utility functions for WezTerm plugin developers.
 
 ## Overview
@@ -24,7 +26,7 @@ local lib = wezterm.plugin.require("https://github.com/chrisgve/lib.wezterm")
 
 ```lua
 -- Example: Using the hash function
-local key = lib.hash("my-string")
+local key = lib.string.hash("my-string")
 
 -- Example: Reading a file
 local success, content = lib.file_io.read_file("/path/to/file")
@@ -38,38 +40,43 @@ local width = lib.wezterm.get_current_window_width()
 
 ## Available Modules
 
-### init
-
-- `hash(str)` - Compute a hash from a string
-
-### file_io
-
-- `execute(cmd)` - Execute a command and return its stdout
-- `ensure_folder_exists(path)` - Create a folder if it doesn't exist
-- `write_file(file_path, str)` - Write a string to a file
-- `read_file(file_path)` - Read a file's contents
-
 ### string
 
-- `array_hash(arr)` - Generate a hash from an array
+- `string.hash(str)` - Compute a hash from a string using the DJB2 algorithm
+- `string.array_hash(arr)` - Generate a hash from an array
 - `string.strip_format_esc_seq(str)` - Remove formatting escape sequences
 - `string.replace_center(str, len, pad)` - Replace the center of a string
 - `string.utf8len(str)` - Get the length of a UTF-8 string
 
+All string functions can be used with both regular and sugar notation:
+```lua
+-- Regular syntax
+local hash = string.hash("test")
+-- Sugar syntax
+local hash = "test":hash()
+```
+
+### file_io
+
+- `file_io.execute(cmd)` - Execute a command and return its stdout
+- `file_io.ensure_folder_exists(path)` - Create a folder if it doesn't exist
+- `file_io.write_file(file_path, str)` - Write a string to a file
+- `file_io.read_file(file_path)` - Read a file's contents
+
 ### table
 
-- `deepcopy(original)` - Create a deep copy of a table
-- `tbl_deep_extend(behavior, ...)` - Merge tables with different behaviors
+- `table.deepcopy(original)` - Create a deep copy of a table
+- `table.tbl_deep_extend(behavior, ...)` - Merge tables with different behaviors
 
 ### utils
 
-- Platform detection: `is_windows`, `is_mac`
-- Path separator: `separator`
+- Platform detection: `utils.is_windows`, `utils.is_mac`
+- Path separator: `utils.separator`
 
 ### wezterm
 
-- `get_current_window_size()` - Get current window dimensions
-- `get_current_window_width()` - Get current window width
+- `wezterm.get_current_window_size()` - Get current window dimensions
+- `wezterm.get_current_window_width()` - Get current window width
 
 ## Testing
 
@@ -78,8 +85,8 @@ The library includes a comprehensive test suite to ensure functionality works as
 ### Running Tests
 
 ```bash
-cd tests
-busted
+cd lib.wezterm
+./tests/run_local.sh
 ```
 
 See [tests/README.md](tests/README.md) for more details on testing.
