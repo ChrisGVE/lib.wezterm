@@ -1,3 +1,4 @@
+local utils = require("plugin.utils")
 local M = {}
 
 local string_utils = {}
@@ -19,7 +20,7 @@ end
 ---@return string hashkey
 function string_utils.array_hash(arr)
 	local str = table.concat(arr, ",")
-	return string_utils.hash(str)
+	return utils.hash(str)
 end
 
 -- Helper function to remove formatting esc sequences in the string
