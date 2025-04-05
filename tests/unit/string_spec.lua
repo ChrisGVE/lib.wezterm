@@ -94,34 +94,34 @@ describe("string", function()
 
 	describe("hash", function()
 		it("should generate a consistent hash for a string", function()
-			local init = require("plugin.init")
+			local str_module = require("plugin.string")
 
 			-- Test with some known strings
-			local hash1 = init.hash("test")
+			local hash1 = str_module.hash("test")
 			assert.is_string(hash1)
 			assert.is_not.equal("", hash1)
 
 			-- Same input should produce same hash
-			local hash2 = init.hash("test")
+			local hash2 = str_module.hash("test")
 			assert.are.equal(hash1, hash2)
 
 			-- Different input should produce different hash
-			local hash3 = init.hash("different")
+			local hash3 = str_module.hash("different")
 			assert.are_not.equal(hash1, hash3)
 		end)
 
 		it("should handle empty strings", function()
-			local init = require("plugin.init")
+			local str_module = require("plugin.string")
 
-			local hash = init.hash("")
+			local hash = str_module.hash("")
 			assert.is_string(hash)
 			assert.is_not.equal("", hash)
 		end)
 
 		it("should handle special characters", function()
-			local init = require("plugin.init")
+			local str_module = require("plugin.string")
 
-			local hash = init.hash("!@#$%^&*()")
+			local hash = str_module.hash("!@#$%^&*()")
 			assert.is_string(hash)
 			assert.is_not.equal("", hash)
 		end)

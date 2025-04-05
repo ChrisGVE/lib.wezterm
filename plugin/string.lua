@@ -1,4 +1,4 @@
-local init = require("plugin.init")
+-- String utility functions for wezterm
 local M = {}
 
 local string_utils = {}
@@ -6,6 +6,7 @@ local string_utils = {}
 -- Compute a hash key from a string using the DJB2 algorithm (Dan Bernstein)
 -- The DJB2 is a simple and fast non-cryptographic hash function
 -- Formula: hash = ((hash << 5) + hash) + c = hash * 33 + c
+-- Starting value 5381 is a prime number chosen by Dan Bernstein for the algorithm
 ---@param str string Input string to hash
 ---@return string hashkey Hexadecimal representation of the hash
 function string_utils.hash(str)
@@ -23,7 +24,7 @@ end
 ---@return string hashkey Hexadecimal representation of the hash
 function string_utils.array_hash(arr)
 	local str = table.concat(arr, ",")
-	return init.hash(str)
+	return string_utils.hash(str)
 end
 
 -- Helper function to remove formatting esc sequences in the string
