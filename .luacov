@@ -1,12 +1,10 @@
 return {
   include = {
-    "plugin/",
+    "^plugin",
   },
   exclude = {
-    "tests/",
+    "^tests",
   },
-  modules = {
-    ["plugin"] = "plugin",
-    ["plugin.*"] = "plugin",
-  }
+  reportfile = "luacov.report.out",
+  statsfile = "luacov.stats.out",
 }

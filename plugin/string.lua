@@ -1,15 +1,26 @@
-local init = require("plugin.init")
 local M = {}
+
+local string_utils = {}
+
+-- compute a hash key from a string
+---@param str string
+---@return string hashkey
+function string_utils.hash(str)
+	local hashkey = 5381
+	for i = 1, #str do
+		hashkey = ((hashkey << 5) + hashkey) + string.byte(str, i)
+		hashkey = hashkey & 0xFFFFFFFF
+	end
+	return string.format("%08x", hashkey)
+end
 
 -- generate a hash from an array
 ---@param arr table
 ---@return string hashkey
-function M.array_hash(arr)
+function string_utils.array_hash(arr)
 	local str = table.concat(arr, ",")
-	return init.hash(str)
+	return string_utils.hash(str)
 end
-
-local string_utils = {}
 
 -- Helper function to remove formatting esc sequences in the string
 ---@param str string
@@ -62,5 +73,9 @@ else
 		setmetatable("", mt)
 	end)
 end
+
+-- Add functions to the module export table
+M.hash = string_utils.hash
+M.array_hash = string_utils.array_hash
 
 return M

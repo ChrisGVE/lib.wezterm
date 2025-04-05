@@ -1,8 +1,8 @@
 return {
-  default = {
-    ROOT = {'tests'},
-    lpath = './plugin/?.lua;./tests/?.lua',
-    verbose = true,
-    coverage = true,
-  }
+	default = {
+		ROOT = { "tests/unit" },
+		lpath = "./plugin/?.lua;./tests/unit/?.lua",
+		verbose = true,
+		coverage = false,
+	},
 }
