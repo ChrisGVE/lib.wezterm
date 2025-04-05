@@ -11,9 +11,12 @@ local function init()
 	_ = dev.setup(opts)
 end
 
--- compute a hash key from a string
----@param str string
----@return string hashkey
+-- Compute a hash key from a string using the DJB2 algorithm (Dan Bernstein)
+-- The DJB2 is a simple and fast non-cryptographic hash function
+-- Formula: hash = ((hash << 5) + hash) + c = hash * 33 + c
+-- Starting value 5381 is a prime number chosen by Dan Bernstein for the algorithm
+---@param str string Input string to hash
+---@return string hashkey Hexadecimal representation of the hash
 function M.hash(str)
 	local hashkey = 5381
 	for i = 1, #str do
