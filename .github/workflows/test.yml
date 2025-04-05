@@ -26,8 +26,10 @@ jobs:
         
     - name: Install test dependencies
       run: |
-        # Install busted for testing
+        # Install test dependencies
         sudo luarocks install busted
+        sudo luarocks install luacov
+        sudo luarocks install luacheck
         
     - name: Run tests
       run: |
