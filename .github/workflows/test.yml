@@ -1,0 +1,42 @@
+name: Run Tests
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Lua
+      uses: leafo/gh-actions-lua@v9
+      with:
+        luaVersion: "5.4"
+    
+    - name: Set up LuaRocks
+      uses: leafo/gh-actions-luarocks@v4
+    
+    - name: Install dependencies
+      run: |
+        luarocks install busted
+        luarocks install luacov
+        luarocks install luacheck
+    
+    - name: Run tests
+      run: |
+        cd tests
+        busted -c
+    
+    - name: Run linter
+      run: |
+        luacheck .
+
+    - name: Upload coverage reports
+      if: success()
+      run: |
+        bash <(curl -s https://codecov.io/bash)

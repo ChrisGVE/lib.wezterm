@@ -1,3 +1,4 @@
+local init = require("plugin.init")
 local M = {}
 
 -- generate a hash from an array
@@ -5,7 +6,7 @@ local M = {}
 ---@return string hashkey
 function M.array_hash(arr)
 	local str = table.concat(arr, ",")
-	return M.hash(str)
+	return init.hash(str)
 end
 
 local string_utils = {}

@@ -1,0 +1,44 @@
+# Lua
+*.lua.coverage
+*.luacov.stats.out
+*.luacov.report.out
+luacov.stats.out
+luacov.report.out
+
+# Compiled Lua sources
+luac.out
+
+# LuaRocks build files
+*.src.rock
+*.zip
+*.tar.gz
+
+# Object files
+*.o
+*.os
+*.ko
+*.obj
+*.elf
+
+# Temporary files
+*.swp
+*~
+
+# Runtime data
+*.log
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Editor specific files
+.vscode/
+.idea/
+.vs/
+
+# Busted testing artifacts
+.busted.out
+
+# Lua environment
+.luacache
+.luarocks/
