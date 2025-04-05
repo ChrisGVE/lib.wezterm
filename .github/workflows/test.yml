@@ -28,12 +28,6 @@ jobs:
         luarocks install luacov
         luarocks install luacheck
     
-    - name: Debug environment
-      run: |
-        echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
-        ls -la $GITHUB_WORKSPACE
-        ls -la $GITHUB_WORKSPACE/tests
-    
     - name: Create .lua structure
       run: |
         mkdir -p .lua/share/lua/5.4
@@ -49,8 +43,26 @@ jobs:
     
     - name: Run linter
       run: |
-        # Tolerate a small number of warnings (up to 5) but fail on errors
-        luacheck . || [ $? -eq 1 ] && [ "$(luacheck . 2>&1 | grep -c "warning")" -le 5 ]
+        # Allow the known string metatable warning
+        result=$(luacheck . --quiet --formatter plain)
+        warning_count=$(echo "$result" | grep -c "warning")
+        error_count=$(echo "$result" | grep -c "error")
+        
+        echo "Warnings: $warning_count, Errors: $error_count"
+        
+        if [ "$error_count" -gt 0 ]; then
+          echo "Found errors in linting:"
+          echo "$result"
+          exit 1
+        fi
+        
+        if [ "$warning_count" -gt 1 ]; then
+          echo "Found too many warnings in linting:"
+          echo "$result"
+          exit 1
+        fi
+        
+        echo "Linting passed (with acceptable warnings)"
     
     - name: Upload coverage reports (if configured)
       if: success()

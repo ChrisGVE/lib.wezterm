@@ -1,4 +1,5 @@
-local utils = require("utils")
+-- File I/O operations for WezTerm plugins
+local utils = require("plugin.utils")
 
 local M = {}
 
@@ -33,7 +34,7 @@ end
 function M.ensure_folder_exists(path)
 	local suc, exitcode, signal
 	if utils.is_windows then
-		suc, exitcode, signal = os.execute('mkdir /p "' .. path:gsub("/", "\\" .. '"'))
+		suc, exitcode, signal = os.execute('mkdir /p "' .. path:gsub("/", "\\") .. '"')
 	else
 		suc, exitcode, signal = os.execute('mkdir -p "' .. path .. '"')
 	end
@@ -46,6 +47,7 @@ end
 
 -- Write a file with the content of a string
 ---@param file_path string full filename
+---@param str string content to write
 ---@return boolean success result
 ---@return string|nil error
 function M.write_file(file_path, str)
@@ -64,7 +66,7 @@ end
 -- Read a file and return its content
 ---@param file_path string full filename
 ---@return boolean success result
----@return string|nil error
+---@return string|nil content_or_error
 function M.read_file(file_path)
 	local stdout
 	local suc, err = pcall(function()
