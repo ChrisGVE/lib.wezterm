@@ -1,0 +1,8 @@
+return {
+  default = {
+    ROOT = {'tests'},
+    lpath = './plugin/?.lua;./tests/?.lua',
+    verbose = true,
+    coverage = true,
+  }
+}

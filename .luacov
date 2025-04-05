@@ -1,0 +1,12 @@
+return {
+  include = {
+    "plugin/",
+  },
+  exclude = {
+    "tests/",
+  },
+  modules = {
+    ["plugin"] = "plugin",
+    ["plugin.*"] = "plugin",
+  }
+}
