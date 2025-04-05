@@ -3,6 +3,7 @@ return {
 		ROOT = { "tests/unit" },
 		lpath = "./plugin/?.lua;./tests/unit/?.lua",
 		verbose = true,
-		coverage = false,
+		-- Enable coverage in CI, disable locally for easier development
+		coverage = os.getenv("CI") == "true",
 	},
 }
