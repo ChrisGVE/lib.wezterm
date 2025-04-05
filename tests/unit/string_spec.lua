@@ -75,23 +75,6 @@ describe("string", function()
 		end)
 	end)
 
-	describe("array_hash", function()
-		it("should generate a hash from an array", function()
-			local str_module = require("plugin.string")
-
-			local hash1 = str_module.array_hash({ "a", "b", "c" })
-			assert.is_string(hash1)
-
-			-- Same input should produce same hash
-			local hash2 = str_module.array_hash({ "a", "b", "c" })
-			assert.are.equal(hash1, hash2)
-
-			-- Different input should produce different hash
-			local hash3 = str_module.array_hash({ "a", "b", "d" })
-			assert.are_not.equal(hash1, hash3)
-		end)
-	end)
-
 	describe("hash", function()
 		it("should generate a consistent hash for a string", function()
 			local str_module = require("plugin.string")
@@ -124,6 +107,23 @@ describe("string", function()
 			local hash = str_module.hash("!@#$%^&*()")
 			assert.is_string(hash)
 			assert.is_not.equal("", hash)
+		end)
+	end)
+
+	describe("array_hash", function()
+		it("should generate a hash from an array", function()
+			local str_module = require("plugin.string")
+
+			local hash1 = str_module.array_hash({ "a", "b", "c" })
+			assert.is_string(hash1)
+
+			-- Same input should produce same hash
+			local hash2 = str_module.array_hash({ "a", "b", "c" })
+			assert.are.equal(hash1, hash2)
+
+			-- Different input should produce different hash
+			local hash3 = str_module.array_hash({ "a", "b", "d" })
+			assert.are_not.equal(hash1, hash3)
 		end)
 	end)
 end)

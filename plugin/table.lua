@@ -1,5 +1,4 @@
-local wezterm = require("wezterm") --[[@as Wezterm]] --- this type cast invokes the LSP module for Wezterm
-
+-- Table utility functions for wezterm
 local M = {}
 
 -- deep copy

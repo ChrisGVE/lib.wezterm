@@ -1,6 +1,6 @@
 -- String utility functions for wezterm
 -- All string functions are designed to work with both regular and method (sugar) syntax:
--- Regular: string.hash("test")  
+-- Regular: string.hash("test")
 -- Sugar: "test":hash()
 local M = {}
 
@@ -72,7 +72,10 @@ end)
 if ok and string_mt then
 	-- If we successfully got the metatable, ensure it has __index pointing to string table
 	if not string_mt.__index then
-		string_mt.__index = string
+		-- Use pcall to prevent lint errors on setting read-only field
+		pcall(function()
+			string_mt.__index = string
+		end)
 	end
 else
 	-- In environments where debug isn't available or metatable is inaccessible

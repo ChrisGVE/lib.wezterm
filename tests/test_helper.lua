@@ -1,9 +1,9 @@
 -- Test helper for lib.wezterm tests
-local busted = require("busted")
-local assert = require("luassert")
+require("busted")
+require("luassert")
 
 -- Add custom assertions
-local say = require("say")
+require("say")
 
 -- Helper to create temp files for testing
 local function create_temp_file(content)
