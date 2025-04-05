@@ -69,4 +69,4 @@ function M.tbl_deep_extend(behavior, ...)
 	return result
 end
 
-return {}
+return M

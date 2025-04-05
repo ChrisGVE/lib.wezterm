@@ -30,3 +30,15 @@ luac.out
 # OS specific files
 .DS_Store
 Thumbs.db
+
+# Editor specific files
+.vscode/
+.idea/
+.vs/
+
+# Busted testing artifacts
+.busted.out
+
+# Lua environment
+.luacache
+.luarocks/
