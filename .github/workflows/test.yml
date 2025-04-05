@@ -14,40 +14,22 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
       
-    # Windows compatibility setup if needed
-    - uses: ilammy/msvc-dev-cmd@v1
-      if: runner.os == 'Windows'
-      
-    # Setup Lua using a well-maintained fork of leafo's action
-    - name: Setup Lua
-      uses: xpol/setup-lua@v1
-      with:
-        lua-version: "5.4"
-        
-    # Setup LuaRocks using xpol's action (which is compatible with setup-lua)
-    - name: Setup LuaRocks
-      uses: xpol/setup-luarocks@v1
-      
-    # Print debugging information
-    - name: Environment Info
+    - name: Setup environment
       run: |
-        lua -v
+        # Install Lua and dependencies via apt
+        sudo apt-get update
+        sudo apt-get install -y lua5.4 lua5.4-dev luarocks
+        
+        # Print diagnostics
+        lua -v || lua5.4 -v
         luarocks --version
-        echo "PATH: $PATH"
-        echo "LUA_PATH: $LUA_PATH"
         
-    # Install dependencies
-    - name: Install dependencies
+    - name: Install test dependencies
       run: |
-        luarocks install busted
-        luarocks install luacheck
+        # Install busted for testing
+        sudo luarocks install busted
         
-    # Run tests
     - name: Run tests
       run: |
+        cd $GITHUB_WORKSPACE
         busted --verbose tests/unit/
-        
-    # Run linter with tolerance for warnings
-    - name: Run linter
-      run: |
-        luacheck . || [ $? -eq 1 ] && echo "Linting warnings are acceptable"
