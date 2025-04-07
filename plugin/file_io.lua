@@ -1,5 +1,5 @@
 -- File I/O operations for WezTerm plugins
-local utils = require("plugin.utils")
+local env = require("env")
 
 local M = {}
 
@@ -33,7 +33,7 @@ end
 ---@return number? signal
 function M.ensure_folder_exists(path)
 	local suc, exitcode, signal
-	if utils.is_windows then
+	if env.is_windows then
 		suc, exitcode, signal = os.execute('mkdir /p "' .. path:gsub("/", "\\") .. '"')
 	else
 		suc, exitcode, signal = os.execute('mkdir -p "' .. path .. '"')
