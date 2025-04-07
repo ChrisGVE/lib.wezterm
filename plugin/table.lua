@@ -17,6 +17,22 @@ function M.deepcopy(original)
 	return copy
 end
 
+-- shallow copy
+---@param original table
+---@return table
+function M.shallowcopy(original)
+	local dest
+	if type(original) == "table" then
+		dest({})
+		for k, v in pairs(original) do
+			dest[k] = v
+		end
+	else
+		dest = original
+	end
+	return dest
+end
+
 -- extend table
 ---@param behavior behavior
 ---@param ... table
