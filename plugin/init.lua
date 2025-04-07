@@ -8,7 +8,7 @@ local function init()
 		keywords = { "utils", "wezterm" },
 		auto = true,
 	}
-	local _ = dev.setup(opts)  -- Use local underscore to explicitly mark as ignored return value
+	local _ = dev.setup(opts) -- Use local underscore to explicitly mark as ignored return value
 end
 
 init()
