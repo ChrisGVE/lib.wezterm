@@ -57,6 +57,25 @@ function string_utils.utf8len(str)
 	return len
 end
 
+-- Helper function to normalize path separator to `/`
+---@param str string string with path
+---@return string normalized_path
+function string_utils.norm_path(str)
+	local result, _ = str:gsub("\\", "/")
+	return result
+end
+
+-- Get basename for dir/file
+---@param str string string with the dir/file
+---@return string|nil
+function string_utils.basename(str)
+	if type(str) ~= "string" then
+		return nil
+	end
+	local result, _ = str:gsub("(.*[/\\])(.*)%.(.*)", "%2")
+	return result
+end
+
 -- Add the string functions to the built-in string table
 -- This allows both regular syntax (string.func) and method syntax (str:func)
 for name, func in pairs(string_utils) do
