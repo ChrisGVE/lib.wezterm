@@ -1,16 +1,24 @@
-local wezterm = require("wezterm") --[[@as Wezterm]] --- this type cast invokes the LSP module for Wezterm
+local wezterm = require("wezterm") --[[@as Wezterm]]
 local dev = wezterm.plugin.require("https://github.com/chrisgve/dev.wezterm")
 
 local M = {}
 
 local function init()
 	local opts = {
-		keywords = { "utils", "wezterm" },
+		keywords = { "http", "github", "chrisgve", "lib", "wezterm" },
 		auto = true,
 	}
-	local _ = dev.setup(opts) -- Use local underscore to explicitly mark as ignored return value
+	dev.setup(opts) -- Use local underscore to explicitly mark as ignored return value
 end
 
 init()
+
+M.table = require("lib.table")
+M.env = require("lib.env")
+M.file_io = require("lib.file_io")
+M.math = require("lib.math")
+M.string = require("lib.string")
+M.wezterm = require("lib.wezterm")
+M.logger = require("lib.logger")
 
 return M
