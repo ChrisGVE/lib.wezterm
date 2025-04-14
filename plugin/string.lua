@@ -21,15 +21,6 @@ function string_utils.hash(str)
 	return string.format("%08x", hashkey)
 end
 
--- Generate a hash from an array by concatenating elements with commas
--- then applying the DJB2 hashing algorithm
----@param arr table Array of values to hash
----@return string hashkey Hexadecimal representation of the hash
-function string_utils.array_hash(arr)
-	local str = table.concat(arr, ",")
-	return string_utils.hash(str)
-end
-
 -- Helper function to remove formatting esc sequences in the string
 ---@param str string Input string that may contain ANSI escape sequences
 ---@return string Clean string with escape sequences removed
@@ -49,12 +40,25 @@ function string_utils.replace_center(str, len, pad)
 	return str:sub(1, start) .. pad .. str:sub(start + len + 1)
 end
 
+-- Wezterm module name decoder
+---@param encoded string
+---@return string
+function string_utils.decode_wezterm_dir(encoded)
+	local result = encoded:gsub("sZs", "/"):gsub("sCs", ":"):gsub("sDs", ".")
+	-- Handle u-encoding for other characters if needed
+	result = result:gsub("u(%d+)", function(n)
+		return utf8.char(n)
+	end)
+	return result
+end
+
 -- Returns the length of a utf8 string, correctly counting multi-byte characters
 ---@param str string UTF-8 encoded string
 ---@return number Count of UTF-8 characters (not bytes)
 function string_utils.utf8len(str)
-	local _, len = str:gsub("[%z\1-\127\194-\244][\128-\191]*", "")
-	return len
+	return utf8.len(str) or 0
+	-- local _, len = str:gsub("[%z\1-\127\194-\244][\128-\191]*", "")
+	-- return len
 end
 
 -- Helper function to normalize path separator to `/`
@@ -107,8 +111,13 @@ else
 	end)
 end
 
--- Add functions to the module export table
-M.hash = string_utils.hash
-M.array_hash = string_utils.array_hash
+-- Generate a hash from an array by concatenating elements with commas
+-- then applying the DJB2 hashing algorithm
+---@param arr table Array of values to hash
+---@return string hashkey Hexadecimal representation of the hash
+function M.array_hash(arr)
+	local str = table.concat(arr, ",")
+	return str:hash(str)
+end
 
 return M
