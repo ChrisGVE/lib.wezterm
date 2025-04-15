@@ -19,7 +19,7 @@ M.table = require("lib.table")
 M.env = require("lib.env")
 M.file_io = require("lib.file_io")
 M.math = require("lib.math")
--- M.string = require("lib.string")
+M.string = require("lib.string")
 M.wezterm = require("lib.wezterm")
 M.logger = require("lib.logger")
 
