@@ -1,7 +1,4 @@
 -- String utility functions for wezterm
--- All string functions are designed to work with both regular and method (sugar) syntax:
--- Regular: string.hash("test")
--- Sugar: "test":hash()
 local M = {}
 
 -- Compute a hash key from a string using the DJB2 algorithm (Dan Bernstein)
@@ -84,7 +81,7 @@ end
 ---@return string hashkey Hexadecimal representation of the hash
 function M.array_hash(arr)
 	local str = table.concat(arr, ",")
-	return str:hash(str)
+	return M.hash(str)
 end
 
 return M
