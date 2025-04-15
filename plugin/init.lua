@@ -1,4 +1,6 @@
 local wezterm = require("wezterm") --[[@as Wezterm]]
+
+---@type { setup: fun(opts: table)}
 local dev = wezterm.plugin.require("https://github.com/chrisgve/dev.wezterm")
 
 local M = {}
