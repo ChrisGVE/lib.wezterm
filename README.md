@@ -19,6 +19,7 @@ This library provides commonly used functionality for WezTerm plugin development
 Add to your WezTerm configuration:
 
 ```lua
+---@type LibWezterm
 local lib = wezterm.plugin.require("https://github.com/chrisgve/lib.wezterm")
 ```
 
@@ -49,6 +50,7 @@ local width = lib.wezterm.get_current_window_width()
 - `string.utf8len(str)` - Get the length of a UTF-8 string
 
 All string functions can be used with both regular and sugar notation:
+
 ```lua
 -- Regular syntax
 local hash = string.hash("test")
@@ -90,6 +92,10 @@ cd lib.wezterm
 ```
 
 See [tests/README.md](tests/README.md) for more details on testing.
+
+## Type annotations
+
+Thanks to [DrKJeff16](https://github.com/DrKJeff16/wezterm-types) for building annotations for this plugin.
 
 ## Contributing
 
