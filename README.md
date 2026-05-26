@@ -103,4 +103,4 @@ Contributions are welcome! Please add tests for any new functionality.
 
 ## License
 
-MIT
+Apache License 2.0
